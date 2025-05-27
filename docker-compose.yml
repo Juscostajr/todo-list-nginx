@@ -1,0 +1,39 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo-nginx
+    restart: always
+    volumes:
+      - ./mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sebastiao
+      MONGO_INITDB_ROOT_PASSWORD: sebastiao123
+      MONGO_INITDB_DATABASE: todolist
+    ports:
+      - 27017:27017
+
+  backend:
+    build: ./backend
+    container_name: backend-nginx
+    restart: always
+
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://sebastiao:sebastiao123@mongo:27017/todolist?authSource=admin
+    ports:
+      - 5000:5000
+
+  frontend:
+    build: 
+      context: ./frontend
+      args:
+        REACT_APP_BACKEND_URI: http://localhost:5000
+    container_name: frontend-nginx
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+
