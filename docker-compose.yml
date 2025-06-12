@@ -7,9 +7,9 @@ services:
     volumes:
       - ./mongo:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: sebastiao
-      MONGO_INITDB_ROOT_PASSWORD: sebastiao123
-      MONGO_INITDB_DATABASE: todolist
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_USER
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_PASS
+      MONGO_INITDB_DATABASE: $MONGO_DB
 
   backend:
     build: ./backend
@@ -19,7 +19,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://sebastiao:sebastiao123@mongo:27017/todolist?authSource=admin
+      - MONGO_URI=mongodb://$MONGO_USER:$MONGO_PASS@$MONGO_HOST:27017/$MONGO_DB?authSource=admin
 
   frontend:
     build: 
