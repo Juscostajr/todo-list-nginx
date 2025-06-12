@@ -9,11 +9,11 @@ distinguished_name = dn
 C  = BR
 ST = Parana
 L  = Campo Mourao
-O  = Nome do Proprietario
-CN = dominio
+O  = Grupo Integrado
+CN = todo.local
 
 [ v3_req ]
 subjectAltName = @alt_names
 
 [ alt_names ]
-DNS.1 = dominio
+DNS.1 = todo.local
